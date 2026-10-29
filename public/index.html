@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#15112d" />
+    <title>Blitz Quiz — Live trivia sprint</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="welcome-screen" class="welcome-screen" aria-labelledby="game-title">
+        <div class="brand-lockup">
+          <div class="bolt" aria-hidden="true">⚡</div>
+          <p class="eyebrow">LIVE TRIVIA SPRINT</p>
+          <h1 id="game-title">Blitz Quiz</h1>
+          <p class="intro">Think fast. Tap faster. Outscore your friends.</p>
+        </div>
+
+        <div class="join-grid">
+          <form id="create-form" class="panel join-panel">
+            <p class="panel-kicker">START A GAME</p>
+            <h2>Open a room</h2>
+            <label for="create-name">Your nickname</label>
+            <input id="create-name" name="name" maxlength="18" autocomplete="nickname" placeholder="e.g. Quiz Wizard" required />
+            <button class="primary-button" type="submit">Create room <span aria-hidden="true">→</span></button>
+          </form>
+
+          <form id="join-form" class="panel join-panel">
+            <p class="panel-kicker">JOIN FRIENDS</p>
+            <h2>Enter a room</h2>
+            <label for="join-name">Your nickname</label>
+            <input id="join-name" name="name" maxlength="18" autocomplete="nickname" placeholder="e.g. Quiz Wizard" required />
+            <label for="room-code">Room code</label>
+            <input id="room-code" class="room-code-input" name="code" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="ABCDE" required />
+            <button class="secondary-button" type="submit">Join room <span aria-hidden="true">→</span></button>
+          </form>
+        </div>
+
+        <p class="how-it-works"><span>2–8 players</span><span>•</span><span>10 questions</span><span>•</span><span>8 seconds each</span></p>
+      </section>
+
+      <section id="game-screen" class="game-screen is-hidden" aria-live="polite">
+        <header class="game-header">
+          <div class="mini-brand"><span aria-hidden="true">⚡</span> Blitz Quiz</div>
+          <div class="room-badge">ROOM <strong id="room-code-display">—</strong><button id="copy-code-button" class="icon-button" type="button" title="Copy room code" aria-label="Copy room code">⧉</button></div>
+          <button id="leave-room-button" class="text-button" type="button">Leave room</button>
+        </header>
+
+        <p id="connection-status" class="connection-status">Connecting to room…</p>
+
+        <div class="game-layout">
+          <section class="main-stage" aria-label="Game area">
+            <div id="lobby-stage" class="stage-card is-hidden">
+              <p class="eyebrow">ROOM LOBBY</p>
+              <h2>Get everyone ready</h2>
+              <p class="stage-copy">Share the room code, then start once every player is ready.</p>
+              <div class="lobby-code" id="lobby-code-display">—</div>
+              <button id="ready-button" class="primary-button" type="button">I’m ready</button>
+              <button id="start-button" class="secondary-button is-hidden" type="button">Start 10-question match</button>
+              <p id="lobby-help" class="helper-text"></p>
+            </div>
+
+            <div id="countdown-stage" class="stage-card is-hidden countdown-stage">
+              <p id="countdown-eyebrow" class="eyebrow">GET READY</p>
+              <div id="countdown-number" class="countdown-number">3</div>
+              <h2 id="countdown-title">The trivia sprint is about to begin</h2>
+              <p class="stage-copy">Answers lock on your first tap.</p>
+            </div>
+
+            <div id="question-stage" class="question-stage is-hidden">
+              <div class="round-strip">
+                <p id="round-label" class="eyebrow">QUESTION 1 OF 10</p>
+                <p id="answer-count" class="answer-count">0 / 0 locked in</p>
+              </div>
+              <div class="timer-wrap" aria-label="Time remaining">
+                <div class="timer-row"><span>TIME</span><strong id="timer-number">8.0</strong></div>
+                <div class="timer-track"><div id="timer-fill" class="timer-fill"></div></div>
+              </div>
+              <h2 id="question-text" class="question-text">Question text</h2>
+              <div id="answers" class="answers" role="group" aria-label="Answer choices"></div>
+              <p id="answer-status" class="answer-status"></p>
+            </div>
+
+            <div id="reveal-stage" class="stage-card is-hidden reveal-stage">
+              <p id="reveal-eyebrow" class="eyebrow">ANSWER REVEAL</p>
+              <h2 id="reveal-title">The answer was…</h2>
+              <p id="correct-answer" class="correct-answer">—</p>
+              <p id="round-outcome" class="round-outcome"></p>
+              <p id="next-up" class="helper-text">Next question coming up…</p>
+            </div>
+
+            <div id="final-stage" class="stage-card is-hidden final-stage">
+              <p class="eyebrow">GAME OVER</p>
+              <div class="winner-mark" aria-hidden="true">🏆</div>
+              <h2 id="winner-name">Winner</h2>
+              <p id="winner-copy" class="stage-copy">takes the Blitz Quiz crown.</p>
+              <button id="new-room-button" class="primary-button" type="button">Start a new room</button>
+            </div>
+          </section>
+
+          <aside class="leaderboard-card" aria-label="Live leaderboard">
+            <div class="leaderboard-heading">
+              <p class="eyebrow">LIVE LEADERBOARD</p>
+              <span id="player-count" class="player-count">0 players</span>
+            </div>
+            <ol id="leaderboard" class="leaderboard"></ol>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast is-hidden" role="status"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
